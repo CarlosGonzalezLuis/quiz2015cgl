@@ -12,13 +12,31 @@ exports.load = function (req, res, next, quizId) {
   ).catch (function(error) {next(error);});
 };
 
-// GET /quizes
-exports.index = function (req, res) {
-   models.Quiz.findAll().then(function(quizes){
+// GET /quizes?search=Italia
+
+exports.index =function (req, res) {
+    var busqueda = '%'+req.query.search+'%';
+    busqueda = busqueda.replace(/\s/g,"%");
+
+   if (req.query.search){
+      //existe parametro busqueda
+        models.Quiz.findAll({
+          where:['pregunta like ?', busqueda],
+          order:[ 'pregunta',' ASC']            
+        }).then(function(quizes){
       res.render('quizes/index.ejs', {quizes: quizes});
+       }
+       ).catch (function(error){ next(error);});
    }
- ).catch(function(error) { next(error);})
+   else{
+      //no existe parametro busqueda
+      models.Quiz.findAll().then(function(quizes){
+         res.render('quizes/index.ejs', {quizes: quizes});
+      }
+      ).catch(function(error) { next(error);})
+   }
 };
+
 
 
 // GET /quizes/:id
