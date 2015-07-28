@@ -15,26 +15,11 @@ exports.load = function (req, res, next, quizId) {
 // GET /quizes
 
 exports.index =function (req, res) {
-    var busqueda = '%'+req.query.search+'%';
-    busqueda = busqueda.replace(/\s/g,"%");
-
-   if (req.query.search){
-      //existe parametro busqueda
-        models.Quiz.findAll({
-          where:['pregunta like ?', busqueda],
-          order:[[ 'pregunta',' ASC']]            
-        }).then(function(quizes){
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-       }
-       ).catch (function(error){ next(error);});
-   }
-   else{
-      //no existe parametro busqueda
-      models.Quiz.findAll().then(function(quizes){
-         res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-      }
-      ).catch(function(error) { next(error);})
-   }
+    models.Quiz.findAll().then
+         (function(quizes){
+           res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+          }
+         ).catch(function(error) { next(error)});
 };
 
 
@@ -104,4 +89,11 @@ exports.update = function (req, res) {
          }
       }
    );
+};
+
+// DELETE /quizes/:id
+exports.destroy = function (req, res) {
+   req.quiz.destroy().then( function() {
+     res.redirect('/quizes');
+   }). catch(function(error){next(error)});
 };
