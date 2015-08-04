@@ -1,5 +1,10 @@
 
     <% include busquedas.ejs%>
+    <%if(session.user){%>
+       <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+    <%}%>
+    <br/><hr/><br/>
+
     <table>
     <% var i; for (i=0; i < quizes.length; i++) { %>
         <tr>
@@ -18,10 +23,7 @@
         </tr>
     <% } %>
     </table> 
-    <p/>
-    <%if(session.user){%>    
-       <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
-    <%}%> 
+    <p/> 
 
 
 

@@ -6,9 +6,10 @@ body                 { font: 16px Georgia, serif; }
 	                   margin-bottom: 1px; color: black;}
 
 section > div        { padding: 20px; }
-header, nav, section { background: #eee; text-align: center;}
-footer               { background: #eee; text-align: center;}
+section              { background: #eee; text-align: center;
+                       overflow: scroll; overflow-x: hidden;}
+footer, header, nav  { background: #eee; text-align: center;}
 nav span             { margin: 0px 10px 0px 0px;}
 
 #ErrorMsgs           { color: #f61; font-size: smaler;}
-
+.error               { color: #f61; font-size: smaler;}
